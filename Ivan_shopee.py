@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
-
-This is a temporary script file.
+author:rifleak74,linzino
 """
 import requests
 from bs4 import BeautifulSoup
