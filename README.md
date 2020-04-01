@@ -1,4 +1,4 @@
-Shopee爬蟲說明文件
+爬蟲說明文件
 =========
 
 <img src="https://imgur.com/NVCBYfI.png"/>
