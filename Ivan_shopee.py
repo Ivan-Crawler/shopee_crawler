@@ -136,7 +136,7 @@ class Crawler:
         desired_capabilities['phantomjs.page.customHeaders.User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
         
         # PhantomJS driver 路徑 似乎只能絕對路徑
-        self.driver = webdriver.PhantomJS(executable_path = theOS +'phantomjs', desired_capabilities=desired_capabilities)
+        self.driver = webdriver.PhantomJS(executable_path = theOS+'phantomjs', desired_capabilities=desired_capabilities)
         
         # 關閉通知提醒
         chrome_options = webdriver.ChromeOptions()
@@ -144,7 +144,8 @@ class Crawler:
         chrome_options.add_experimental_option("prefs",prefs)
         
         # 開啟瀏覽器
-        self.driver = webdriver.Chrome(theOS +'chromedriver',chrome_options=chrome_options)
+        self.driver = webdriver.Chrome(theOS+'chromedriver',chrome_options=chrome_options)
+        time.sleep(5)
         
     def shopee(self):
         self.driver.get('https://shopee.tw/search?keyword=' + self.keyword )
@@ -163,7 +164,7 @@ class Crawler:
         
         container_product = pd.DataFrame()
         container_comment = pd.DataFrame()
-        for i in range(self.page):
+        for i in range(int(self.page)):
 
             itemid = []
             shopid =[]
@@ -223,7 +224,7 @@ class Crawler:
                 thecontent = thecontent[(thecontent.find(getname)) + len(getname):]
                 thecut = thecontent.split('\n')
         
-                if re.search('市|區|縣|鄉|海外', thecontent): #有時會沒有商品地點資料
+                if re.search('市|區|縣|鄉|海外|中國大陸', thecontent): #有時會沒有商品地點資料
                     if re.search('已售出', thecontent): #有時會沒銷售資料
                         if '出售' in thecut[-3][1:]:
                             theprice = thecut[-4][1:]
@@ -304,7 +305,10 @@ class Crawler:
                     is_hidden.append(comm['is_hidden'])
                     orderid.append(comm['orderid'])
                     comment_rating_star.append(comm['rating_star'])
-                    comment.append(comm['comment'])
+                    try:
+                        comment.append(comm['comment'])
+                    except:
+                        comment.append(None)
                     
                     p=[]
                     for pro in comm['product_items']:
