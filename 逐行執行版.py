@@ -54,18 +54,8 @@ def goods_comments(item_id, shop_id):
     st=st.replace("\\r","^r")
     
     gj=json.loads(st)
-    try:
-        return gj['comments']
-    except:
-        time.sleep(5)
-        url = 'https://shopee.tw/api/v1/comment_list/?item_id='+ str(item_id) + '&shop_id=' + str(shop_id) + '&offset=0&limit=200&flag=1&filter=0'
-        r = requests.get(url,headers = my_headers)
-        st= r.text.replace("\\n","^n")
-        st=st.replace("\\t","^t")
-        st=st.replace("\\r","^r")
-        
-        gj=json.loads(st)
-        return  gj['comments']
+    return gj['comments']
+    
 
 # 進入每個商品，抓取賣家更細節的資料（商品文案、SKU）
 def goods_detail(item_id, shop_id):
